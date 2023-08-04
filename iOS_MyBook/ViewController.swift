@@ -12,6 +12,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    
+    func viewControllerAtIndex (index:Int) -> ContentViewController? {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let contentViewController = storyboard.instantiateViewController(withIdentifier: "MainContentViewController") as? ContentViewController
+        contentViewController?.nowPageNumber = index
+        return contentViewController
     }
 
 
