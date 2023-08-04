@@ -7,7 +7,34 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPageViewControllerDataSource {
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        let vc = viewController as? ContentViewController
+        guard var index = vc?.nowPageNumber else { return nil }
+        if index == 0 || index == NSNotFound {
+            return nil
+        } else {
+            index -= 1
+            return viewControllerAtIndex(index: index)
+        }
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        let vc = viewController as? ContentViewController
+        guard var index = vc?.nowPageNumber else { return nil }
+        if index == NSNotFound {
+            return nil
+        } else {
+            index += 1
+            if index >= 3 {
+                return nil
+            } else {
+                return viewControllerAtIndex(index: index)
+            }
+        }
+    }
+    
     
     var pageViewController: UIViewController?
 
@@ -17,6 +44,7 @@ class ViewController: UIViewController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let pageViewController = storyboard.instantiateViewController(withIdentifier: "PageViewController") as? UIPageViewController
+        pageViewController?.dataSource = self // dataSource
         pageViewController?.view.frame = self.view.frame // 設定 pageViewController畫面跟 ViewController一樣大
         if let okPageViewController = pageViewController {
             addChild(pageViewController!) // 加入到 view controller當中
