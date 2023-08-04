@@ -17,7 +17,7 @@ class ContentViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        mainImageView.image = UIImage(named: "\(nowPageNumber)")
+        mainImageView.image = UIImage(named: "\(nowPageNumber)") // int to string
     }
     
 
